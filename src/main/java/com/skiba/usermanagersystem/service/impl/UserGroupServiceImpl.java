@@ -71,4 +71,20 @@ public class UserGroupServiceImpl implements UserGroupService {
             userGroupRepository.deleteById(groupId);
         }
     }
+
+    @Override
+    public UserGroupDisplay updateUserGroup(UserGroupCreation userGroupCreation, Long groupId) {
+        UserGroup userGroup = userGroupRepository.findUserGroupById(groupId);
+
+        if (userGroup == null) {
+            throw new UserGroupNotFoundException(groupId);
+        } else {
+
+            userGroup.setName(userGroupCreation.getName());
+
+            UserGroup savedGroup = userGroupRepository.save(userGroup);
+
+            return userGroupToUserGroupDisplayMapper.map(savedGroup);
+        }
+    }
 }

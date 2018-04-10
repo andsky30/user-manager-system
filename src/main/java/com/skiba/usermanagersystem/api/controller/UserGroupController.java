@@ -3,6 +3,7 @@ package com.skiba.usermanagersystem.api.controller;
 import com.skiba.usermanagersystem.api.dto.UserGroupCreation;
 import com.skiba.usermanagersystem.api.dto.UserGroupDisplay;
 import com.skiba.usermanagersystem.api.service.UserGroupService;
+import com.skiba.usermanagersystem.model.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,10 @@ import java.util.List;
 @RestController
 public class UserGroupController {
 
-    public static final String MESSAGE_AFTER_USERGROUP_BY_ID_DELETION = "User group " +
+    private static final String MESSAGE_AFTER_USERGROUP_BY_ID_DELETION = "User group " +
             "with ID: %d has been deleted successfully!!!";
 
-    UserGroupService userGroupService;
+    private UserGroupService userGroupService;
 
     @Autowired
     public UserGroupController(UserGroupService userGroupService) {
@@ -34,7 +35,7 @@ public class UserGroupController {
     }
 
     @GetMapping(value = "/api/groups/{groupId}")
-    public ResponseEntity<UserGroupDisplay> getSingleGroup(@PathVariable Long groupId){
+    public ResponseEntity<UserGroupDisplay> getSingleGroup(@PathVariable Long groupId) {
 
         UserGroupDisplay singleGroup = userGroupService.getSingleGroupById(groupId);
 
@@ -56,12 +57,22 @@ public class UserGroupController {
     }
 
     @DeleteMapping(value = "/api/groups/{groupId}")
-    public ResponseEntity<String> deleteUserGroup(@PathVariable Long groupId){
+    public ResponseEntity<String> deleteUserGroup(@PathVariable Long groupId) {
 
         userGroupService.removeUserGroupById(groupId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(String.format(MESSAGE_AFTER_USERGROUP_BY_ID_DELETION, groupId));
+    }
+
+    @PutMapping(value = "/api/groups/{groupId}")
+    public ResponseEntity<UserGroupDisplay> updateUserGroup(
+            @RequestBody UserGroupCreation userGroupCreation, @PathVariable Long groupId) {
+
+        UserGroupDisplay updatedgroup = userGroupService.updateUserGroup(userGroupCreation, groupId);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(updatedgroup);
     }
 }

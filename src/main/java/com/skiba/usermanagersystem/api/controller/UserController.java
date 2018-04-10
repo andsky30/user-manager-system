@@ -9,17 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.xml.ws.Response;
 import java.net.URI;
 import java.util.List;
 
 @RestController
 public class UserController {
 
-    public static final String MESSAGE_AFTER_USER_BY_ID_DELETION = "User with ID: %d has been deleted successfully!!!";
+    private static final String MESSAGE_AFTER_USER_BY_ID_DELETION = "User with ID: %d has been deleted successfully!!!";
 
-
-    UserService userService;
+    private UserService userService;
 
     @Autowired
     public UserController(UserService userService) {

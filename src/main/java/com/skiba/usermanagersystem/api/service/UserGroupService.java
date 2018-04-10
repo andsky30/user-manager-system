@@ -16,4 +16,6 @@ public interface UserGroupService {
 
     void removeUserGroupById(Long groupId);
 
+    UserGroupDisplay updateUserGroup(UserGroupCreation userGroupCreation, Long groupId);
+
 }
