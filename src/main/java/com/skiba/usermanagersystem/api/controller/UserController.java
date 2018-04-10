@@ -6,6 +6,7 @@ import com.skiba.usermanagersystem.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -54,7 +55,7 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/api/users/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userId){
+    public ResponseEntity<?> deleteUser(@PathVariable Long userId){
 
         userService.removeUserById(userId);
 
@@ -62,6 +63,7 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .body(String.format(MESSAGE_AFTER_USER_BY_ID_DELETION, userId));
     }
+
 
     @PutMapping(value = "/api/users/{userId}")
     public ResponseEntity<UserDisplay> updateUser(

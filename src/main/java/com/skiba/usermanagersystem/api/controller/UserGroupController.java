@@ -1,9 +1,9 @@
 package com.skiba.usermanagersystem.api.controller;
 
+import com.skiba.usermanagersystem.api.dto.LongUserIdWrapper;
 import com.skiba.usermanagersystem.api.dto.UserGroupCreation;
 import com.skiba.usermanagersystem.api.dto.UserGroupDisplay;
 import com.skiba.usermanagersystem.api.service.UserGroupService;
-import com.skiba.usermanagersystem.model.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +19,12 @@ public class UserGroupController {
 
     private static final String MESSAGE_AFTER_USERGROUP_BY_ID_DELETION = "User group " +
             "with ID: %d has been deleted successfully!!!";
+
+    private static final String MESSAGE_AFTER_USER_TO_GROUP_ADDITION = "User  " +
+            "with ID: %d has been added successfully to user group with ID: %d";
+
+    private static final String MESSAGE_AFTER_USER_FROM_GROUP_DELETION = "User  " +
+            "with ID: %d has been deleted successfully from user group with ID: %d";
 
     private UserGroupService userGroupService;
 
@@ -70,9 +76,35 @@ public class UserGroupController {
     public ResponseEntity<UserGroupDisplay> updateUserGroup(
             @RequestBody UserGroupCreation userGroupCreation, @PathVariable Long groupId) {
 
-        UserGroupDisplay updatedgroup = userGroupService.updateUserGroup(userGroupCreation, groupId);
+        UserGroupDisplay updatedGroup = userGroupService.updateUserGroup(userGroupCreation, groupId);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(updatedgroup);
+                .body(updatedGroup);
+    }
+
+    @PostMapping(value = "/api/groups/{groupId}/members")
+    public ResponseEntity<String> addUserToGroup(@RequestBody LongUserIdWrapper userIdObj,
+                                                 @PathVariable Long groupId) {
+
+        Long userId = userIdObj.getUserId();
+
+        userGroupService.addUserToGroup(groupId, userId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(String.format(MESSAGE_AFTER_USER_TO_GROUP_ADDITION, userId, groupId));
+    }
+
+    @DeleteMapping(value = "/api/groups/{groupId}/members")
+    public ResponseEntity<String> removeUserFromGroup(@RequestBody LongUserIdWrapper userIdObj,
+                                                 @PathVariable Long groupId) {
+
+        Long userId = userIdObj.getUserId();
+
+        userGroupService.removeUserFromGroup(groupId, userId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(String.format(MESSAGE_AFTER_USER_FROM_GROUP_DELETION, userId, groupId));
     }
 }

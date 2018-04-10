@@ -18,4 +18,8 @@ public interface UserGroupService {
 
     UserGroupDisplay updateUserGroup(UserGroupCreation userGroupCreation, Long groupId);
 
+    void addUserToGroup(Long groupId, Long userId);
+
+    void removeUserFromGroup(Long groupId, Long userId);
+
 }

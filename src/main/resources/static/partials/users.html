@@ -1,0 +1,43 @@
+<div>
+
+    <a href="" ng-click="showUsersCtrl.showAddingForm()">Add new user</a>
+
+
+    <form ng-controller="AddUserController as addUserCtrl" ng-show="showAddForm">
+        <input class="add_user_input" type = "text" placeholder="Username" ng-model="addUserCtrl.user.userName"><br />
+        <input class="add_user_input" type = "password" placeholder="Password" ng-model="addUserCtrl.user.password"><br />
+        <input class="add_user_input" type = "text" placeholder="First Name" ng-model="addUserCtrl.user.firstName"><br />
+        <input class="add_user_input" type = "text" placeholder="Last Name" ng-model="addUserCtrl.user.lastName"><br />
+        <input class="add_user_input" type = "text" placeholder="Date of birth" ng-model="addUserCtrl.user.dateOfBirth"><br />
+        <button id="add_user_input" ng-click="addUserCtrl.saveUser()">Add user</button>
+    </form>
+
+    <h1>List of all users</h1>
+
+    <table id="users_table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>USER NAME</th>
+                <th>PASSWORD</th>
+                <th>FIRST NAME</th>
+                <th>LAST NAME</th>
+                <th>DATE OF BIRTH</th>
+                <th>GROUPS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="u in showUsersCtrl.users">
+                <td>{{u.id}}</td>
+                <td>{{u.userName}}</td>
+                <td>{{u.password}}</td>
+                <td>{{u.firstName}}</td>
+                <td>{{u.lastName}}</td>
+                <td>{{u.dateOfBirth}}</td>
+                <td>{{u.userGroups}}</td>
+                <td><a ng-href="#!users/confirm/{{u.id}}">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
