@@ -11,11 +11,13 @@ public interface UserService {
 
     List<UserDisplay> getAllUsers();
 
+    UserDisplay getSingleUserById(Long userId);
+
 //    User getSingleUser();
 //
     UserDisplay addUser(UserCreation userCreation);
 //
-//    void removeUser(Long userId);
+    void removeUserById(Long userId);
 //
 //    User updateUser(Long userId);
 
