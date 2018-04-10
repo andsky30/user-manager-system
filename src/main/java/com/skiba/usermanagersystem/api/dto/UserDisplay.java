@@ -1,19 +1,9 @@
-package com.skiba.usermanagersystem.model;
+package com.skiba.usermanagersystem.api.dto;
 
-import javax.persistence.Id;
-
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "user")
-public class User {
+public class UserDisplay {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
     private Long id;
 
     private String userName;
@@ -24,36 +14,30 @@ public class User {
 
     private String lastName;
 
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-//            CascadeType.PERSIST,
-//                    CascadeType.MERGE,
-            })
-    @JoinTable(
-            name = "user_userGroups",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id")
-    )
-    private List<UserGroup> userGroups;
+    private List<String> userGroups;
 
-    public User() {
-        userGroups = new ArrayList<>();
+    public UserDisplay() {
     }
 
-    public User(String userName, String password,
-                String firstName, String lastName, LocalDate dateOfBirth) {
+    public UserDisplay(Long id, String userName, String password,
+                       String firstName, String lastName, String dateOfBirth, List<String> userGroups) {
+        this.id = id;
         this.userName = userName;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
-        this.userGroups = new ArrayList<>();
+        this.userGroups = userGroups;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -88,20 +72,19 @@ public class User {
         this.lastName = lastName;
     }
 
-    public LocalDate getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<UserGroup> getUserGroups() {
+    public List<String> getUserGroups() {
         return userGroups;
     }
 
-    public void setUserGroups(List<UserGroup> userGroups) {
+    public void setUserGroups(List<String> userGroups) {
         this.userGroups = userGroups;
     }
-
 }

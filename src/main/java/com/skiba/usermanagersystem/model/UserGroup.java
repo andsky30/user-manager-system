@@ -3,6 +3,7 @@ package com.skiba.usermanagersystem.model;
 import javax.persistence.Id;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,14 +11,45 @@ import java.util.List;
 public class UserGroup {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "group_id")
     private Long id;
 
     private String name;
 
-    @ManyToMany(mappedBy = "userGroups")
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+            CascadeType.MERGE,
+            },
+            mappedBy = "userGroups")
     private List<User> users;
 
+    public UserGroup() {
+        this.users = new ArrayList<>();
+    }
 
+    public UserGroup(String name) {
+        this.name = name;
+        this.users = new ArrayList<>();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 }
