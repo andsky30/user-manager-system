@@ -11,15 +11,15 @@ import static com.skiba.usermanagersystem.service.mapper.UserToUserDisplayMapper
 @Component
 public class UserCreationToUserMapper {
 
-    public User map(UserCreation userTransfer) {
+    public User map(UserCreation userCreation) {
 
-        LocalDate dateOfBirth = LocalDate.parse(userTransfer.getDateOfBirth(),
+        LocalDate dateOfBirth = LocalDate.parse(userCreation.getDateOfBirth(),
                 BIRTHDAY_DATE_FORMATTER);
 
-        return new User(userTransfer.getUserName(),
-                userTransfer.getPassword(),
-                userTransfer.getFirstName(),
-                userTransfer.getLastName(),
+        return new User(userCreation.getUserName(),
+                userCreation.getPassword(),
+                userCreation.getFirstName(),
+                userCreation.getLastName(),
                 dateOfBirth);
     }
 }

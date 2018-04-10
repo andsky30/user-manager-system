@@ -65,4 +65,14 @@ public class UserController {
                 .body(String.format(MESSAGE_AFTER_USER_BY_ID_DELETION, userId));
     }
 
+    @PutMapping(value = "/api/users/{userId}")
+    public ResponseEntity<UserDisplay> updateUser(
+            @RequestBody UserCreation userCreation, @PathVariable Long userId) {
+
+        UserDisplay updatedUser = userService.updateUser(userCreation, userId);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(updatedUser);
+    }
+
 }

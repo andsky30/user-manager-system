@@ -18,7 +18,7 @@ public interface UserService {
     UserDisplay addUser(UserCreation userCreation);
 //
     void removeUserById(Long userId);
-//
-//    User updateUser(Long userId);
+
+    UserDisplay updateUser(UserCreation userCreation, Long userId);
 
 }
