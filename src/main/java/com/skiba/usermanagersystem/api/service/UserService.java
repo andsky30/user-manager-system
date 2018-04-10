@@ -13,10 +13,8 @@ public interface UserService {
 
     UserDisplay getSingleUserById(Long userId);
 
-//    User getSingleUser();
-//
     UserDisplay addUser(UserCreation userCreation);
-//
+
     void removeUserById(Long userId);
 
     UserDisplay updateUser(UserCreation userCreation, Long userId);

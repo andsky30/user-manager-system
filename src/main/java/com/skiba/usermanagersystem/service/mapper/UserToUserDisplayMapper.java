@@ -1,14 +1,11 @@
 package com.skiba.usermanagersystem.service.mapper;
 
-import com.skiba.usermanagersystem.api.dto.UserGroupTransfer;
 import com.skiba.usermanagersystem.api.dto.UserDisplay;
 import com.skiba.usermanagersystem.model.User;
 import org.springframework.stereotype.Component;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
