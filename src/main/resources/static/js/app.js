@@ -14,6 +14,16 @@ var app=angular
                 controller: 'ShowUsersController',
                 controllerAs: 'showUsersCtrl'
             })
+            .when('/groups', {
+                templateUrl: '/partials/groups.html',
+                controller: 'GroupsController',
+                controllerAs: 'groupsCtrl'
+            })
+            .when('/groups/confirm/:id', {
+                templateUrl: '/partials/group_delete.html',
+                controller: 'GroupsController',
+                controllerAs: 'groupsCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

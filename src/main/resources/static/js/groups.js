@@ -2,55 +2,92 @@
 
 angular
     .module('groupsModule',[])
-    .constant('NOTES_ENDPOINT', '/api/notes/:id')
-    .factory('Note', function($resource, NOTES_ENDPOINT) {
-        return $resource(NOTES_ENDPOINT);
+    .constant('GROUP_ENDPOINT', '/api/groups/:id')
+    .factory('Group', function($resource, GROUP_ENDPOINT) {
+        return $resource(GROUP_ENDPOINT);
     })
-    .service('Notes', function(Note) {
+    .factory('GroupPUT', function($resource, GROUP_ENDPOINT) {
+        return $resource(GROUP_ENDPOINT, null,
+            {
+                'update': { method:'PUT' }
+            })
+    })
+    .service('Groups', function(Group) {
 
-        this.getAll = function() {
-            return Note.query();
+        this.getAll = function () {
+            return Group.query();
         };
 
         this.get = function (index) {
-            return Note.get({id: index});
+            return Group.get({id: index});
         };
 
-        this.add = function(note) {
-            note.$save();
+        this.add = function (group) {
+            group.$save()
         };
 
         this.delete = function (index) {
-            return Note.delete({id: index})
+            return Group.delete({id: index})
+        };
+    })
+    .controller('AddGroupController', function(Groups, Group) {
+        var vm = this;
+        vm.group = new Group();
+        vm.saveGroup = function() {
+            Groups.add(vm.group);
+            vm.group = new Group();
+
+            location.reload();
         }
     })
-    .controller('NotesController', function(Notes) {
+    .controller('GroupsController', function(Groups, GroupPUT, $routeParams, $location, $rootScope) {
         var vm = this;
-        vm.notes = Notes.getAll();
-    })
-    .controller('SingleNoteController', function(Notes, Note, $routeParams) {
-        var vm = this;
+        vm.groups = Groups.getAll();
 
-        var noteId = $routeParams.id;
-        vm.note = Notes.get(noteId);
-    })
-    .controller('AddDeleteNoteController', function(Notes, Note, $routeParams, $location) {
-        var vm = this;
+        var groupId = $routeParams.id;
+        vm.group = Groups.get(groupId);
 
-        var noteId = $routeParams.id;
-        vm.note = new Note();
+        vm.deleteGroup = function (groupId) {
+            Groups.delete(groupId);
 
-        vm.saveNote = function() {
-
-            Notes.add(vm.note);
-            vm.note = new Note();
-
-            $location.path('/profile/notes');
+            $location.path('/groups');
+            location.reload();
         };
 
-        vm.deleteNote = function () {
-            Notes.delete(noteId);
+        $rootScope.showAddForm = false;
+        $rootScope.showEditForm = false;
 
-            $location.path('/profile/notes/');
+        vm.showEditForm = function () {
+
+            if ($rootScope.showEditForm === false){
+                $rootScope.showEditForm = true;
+            }
+        };
+
+        vm.hideEditForm = function () {
+
+            if ($rootScope.showEditForm === true){
+                $rootScope.showEditForm = false;
+            }
+        };
+
+        $rootScope.showAddGroupForm = false;
+
+        vm.showAddingForm = function () {
+
+            if ($rootScope.showAddGroupForm === false){
+                $rootScope.showAddGroupForm = true
+            } else $rootScope.showAddGroupForm = false;
+        };
+
+        vm.setGroup = function (groupId) {
+            vm.group = Groups.get(groupId);
+        };
+
+        vm.saveEditedGroup = function () {
+            var groupId = vm.group.id;
+            GroupPUT.update({id:groupId},vm.group);
+            location.reload()
         }
-    });
+    })
+;

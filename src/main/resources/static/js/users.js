@@ -1,10 +1,16 @@
 'use strict';
 
 angular
-    .module('usersModule',[])
+.module('usersModule',[])
     .constant('USER_ENDPOINT', '/api/users/:id')
     .factory('User', function($resource, USER_ENDPOINT) {
-        return $resource(USER_ENDPOINT);
+            return $resource(USER_ENDPOINT);
+    })
+    .factory('UserPUT', function($resource, USER_ENDPOINT) {
+        return $resource(USER_ENDPOINT, null,
+            {
+                'update': { method:'PUT' }
+            })
     })
     .service('Users', function(User) {
 
@@ -23,21 +29,8 @@ angular
         this.delete = function (index) {
             return User.delete({id: index})
         };
-        this.deleteAccount = function () {
-            return User.delete()
-        }
-    })
-    .constant('ACCOUNT_ENDPOINT', '/api/users/account')
-    .factory('Account', function($resource, ACCOUNT_ENDPOINT) {
-        return $resource(ACCOUNT_ENDPOINT);
-    })
-    .service('Accounts', function(Account) {
 
-        this.get = function () {
-            return Account.get();
-        }
     })
-
     .controller('AddUserController', function(Users, User) {
         var vm = this;
         vm.user = new User();
@@ -46,9 +39,9 @@ angular
             vm.user = new User();
 
             location.reload();
-        }
+        };
     })
-    .controller('ShowUsersController', function(Users, $routeParams, $location, $rootScope) {
+    .controller('ShowUsersController', function(Users, UserPUT, $routeParams, $location, $rootScope) {
         var vm = this;
         vm.users = Users.getAll();
 
@@ -56,28 +49,47 @@ angular
         vm.user = Users.get(userId);
 
         vm.deleteUser = function (userId) {
-            Users.delete(userId)
-                // .then(location.reload())
-            ;
+            Users.delete(userId);
 
             $location.path('/users');
             location.reload();
         };
 
+        $rootScope.showAddForm = false;
+        $rootScope.showEditForm = false;
+
         vm.showAddingForm = function () {
 
-            $rootScope.showAddForm = true;
+            if ($rootScope.showAddForm === false){
+                $rootScope.showAddForm = true;
+            } else $rootScope.showAddForm = false;
+        };
+
+        vm.showEditForm = function () {
+
+            if ($rootScope.showEditForm === false){
+                $rootScope.showEditForm = true;
+            }
+        };
+
+        vm.hideEditForm = function () {
+
+            if ($rootScope.showEditForm === true){
+                $rootScope.showEditForm = false;
+            }
+        };
+
+        vm.setUser = function (userId) {
+            vm.user = Users.get(userId);
+        };
+        
+        vm.saveEditedUser = function () {
+            var userId = vm.user.id;
+            UserPUT.update({id:userId},vm.user);
+            location.reload()
         }
+
     })
-    .controller('AccountController', function(Users, Accounts, $routeParams, $location) {
-        var vm = this;
+    
 
-        vm.user = Accounts.get();
-
-        vm.delete = function () {
-            Users.deleteAccount();
-
-            $location.path('/');
-        }
-    })
 ;

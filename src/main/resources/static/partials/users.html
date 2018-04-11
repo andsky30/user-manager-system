@@ -1,7 +1,7 @@
 <div>
 
-    <a href="" ng-click="showUsersCtrl.showAddingForm()">Add new user</a>
-
+    <a href="" ng-click="showUsersCtrl.showAddingForm();
+                        showUsersCtrl.hideEditForm()">Add new user</a>
 
     <form ng-controller="AddUserController as addUserCtrl" ng-show="showAddForm">
         <input class="add_user_input" type = "text" placeholder="Username" ng-model="addUserCtrl.user.userName"><br />
@@ -10,6 +10,20 @@
         <input class="add_user_input" type = "text" placeholder="Last Name" ng-model="addUserCtrl.user.lastName"><br />
         <input class="add_user_input" type = "text" placeholder="Date of birth" ng-model="addUserCtrl.user.dateOfBirth"><br />
         <button id="add_user_input" ng-click="addUserCtrl.saveUser()">Add user</button>
+        <button id="add_cancel_input" ng-click="showUsersCtrl.showAddingForm()">Cancel</button>
+    </form>
+
+    <br/>
+    <br/>
+
+    <form  ng-show="showEditForm">
+        <input class="add_user_input" type = "text" placeholder="Username" ng-model="showUsersCtrl.user.userName"><br />
+        <input class="add_user_input" type = "password" placeholder="Password" ng-model="showUsersCtrl.user.password"><br />
+        <input class="add_user_input" type = "text" placeholder="First Name" ng-model="showUsersCtrl.user.firstName"><br />
+        <input class="add_user_input" type = "text" placeholder="Last Name" ng-model="showUsersCtrl.user.lastName"><br />
+        <input class="add_user_input" type = "text" placeholder="Date of birth" ng-model="showUsersCtrl.user.dateOfBirth"><br />
+        <button id="edit_user_input" ng-click="showUsersCtrl.saveEditedUser()">Save user</button>
+        <button id="edit_cancel_input" ng-click="showUsersCtrl.hideEditForm()">Cancel</button>
     </form>
 
     <h1>List of all users</h1>
@@ -36,6 +50,8 @@
                 <td>{{u.dateOfBirth}}</td>
                 <td>{{u.userGroups}}</td>
                 <td><a ng-href="#!users/confirm/{{u.id}}">Delete</a></td>
+                <td><a href=""  ng-click="showUsersCtrl.showEditForm();
+                 showUsersCtrl.setUser(u.id)">Edit</a></td>
             </tr>
         </tbody>
     </table>
