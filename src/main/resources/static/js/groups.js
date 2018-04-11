@@ -12,6 +12,20 @@ angular
                 'update': { method:'PUT' }
             })
     })
+    .constant('GROUP_USER_ENDPOINT', '/api/groups/:id/members')
+    .factory('GroupUser', function($resource, GROUP_USER_ENDPOINT) {
+        return $resource(GROUP_USER_ENDPOINT, null,
+            {
+                'delete': {
+                    method: 'DELETE',
+                    hasBody: true,
+                    headers: {"Content-Type": "application/json;charset=UTF-8"}
+                },
+                'addUserToGroup':{
+                    method: 'POST'
+                }
+            });
+    })
     .service('Groups', function(Group) {
 
         this.getAll = function () {
@@ -40,7 +54,7 @@ angular
             location.reload();
         }
     })
-    .controller('GroupsController', function(Groups, GroupPUT, $routeParams, $location, $rootScope) {
+    .controller('GroupsController', function(Groups, GroupPUT, GroupUser, $routeParams, $location, $rootScope) {
         var vm = this;
         vm.groups = Groups.getAll();
 
@@ -71,6 +85,15 @@ angular
             }
         };
 
+        vm.toggle_visibility = function(id) {
+            var e = document.getElementById(id);
+            if(e.style.display === 'block')
+                e.style.display = 'none';
+            else
+                e.style.display = 'block';
+        };
+
+
         $rootScope.showAddGroupForm = false;
 
         vm.showAddingForm = function () {
@@ -88,6 +111,19 @@ angular
             var groupId = vm.group.id;
             GroupPUT.update({id:groupId},vm.group);
             location.reload()
+        };
+
+        vm.deleteUserFromGroup = function (groupId, userId) {
+            var obj = {"userId": userId};
+            GroupUser.delete({id: groupId}, obj);
+            location.reload();
+        };
+
+        vm.addUserToGroup = function (groupId, userId) {
+            var obj = {"userId": userId};
+            GroupUser.addUserToGroup({id: groupId}, obj);
+            location.reload();
         }
+
     })
 ;

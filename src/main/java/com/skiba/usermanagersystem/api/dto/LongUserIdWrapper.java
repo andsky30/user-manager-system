@@ -2,9 +2,9 @@ package com.skiba.usermanagersystem.api.dto;
 
 public class LongUserIdWrapper {
 
-    private Long userId;
+    private String userId;
 
     public Long getUserId() {
-        return userId;
+        return Long.parseLong(userId);
     }
 }

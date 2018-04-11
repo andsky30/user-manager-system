@@ -31,14 +31,25 @@
             <tr ng-repeat="g in groupsCtrl.groups">
                 <td>{{g.id}}</td>
                 <td>{{g.name}}</td>
-                <!--<td>{{g.users}}</td>-->
-                <td><a ng-href="#!groups/confirm/{{g.id}}">Delete</a></td>
-                <td><a href=""  ng-click="groupsCtrl.showEditForm(); groupsCtrl.setGroup(g.id)">Edit</a></td>
                 <td>
-                    <select>
-                        <option ng-repeat="u in g.users">{{u.userName}}</option>
-                    </select>
+                    <a href="" ng-click="groupsCtrl.toggle_visibility(g.id)">Click to show/hide users</a>
+                    <ol id="{{g.id}}" style="display: none">
+                        <li ng-repeat="u in g.users">
+                            {{u.firstName}} {{u.lastName}} {{u.userName}}
+                            <a ng-click="groupsCtrl.deleteUserFromGroup(g.id, u.id)">Delete user</a>
+                        </li>
+                        <li><a>Add user to group</a>
+                            <div>
+                                <select>
+                                    <option ng-repeat="" value="">{{}}</option>
+                                </select>
+                                <input type="submit">
+                            </div>
+                        </li>
+                    </ol>
                 </td>
+                <td><a ng-href="#!groups/confirm/{{g.id}}">Delete group</a></td>
+                <td><a href=""  ng-click="groupsCtrl.showEditForm(); groupsCtrl.setGroup(g.id)">Edit group's name</a></td>
             </tr>
         </tbody>
     </table>

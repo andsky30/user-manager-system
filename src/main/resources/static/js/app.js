@@ -24,6 +24,11 @@ var app=angular
                 controller: 'GroupsController',
                 controllerAs: 'groupsCtrl'
             })
+            .when('/groups/:id/members', {
+                templateUrl: '/partials/add_user_to_group.html',
+                controller: 'UserGroupController',
+                controllerAs: 'userGroupCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

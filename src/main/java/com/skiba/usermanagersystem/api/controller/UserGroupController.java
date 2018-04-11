@@ -83,7 +83,7 @@ public class UserGroupController {
     }
 
     @PostMapping(value = "/api/groups/{groupId}/members")
-    public ResponseEntity<String> addUserToGroup(@RequestBody LongUserIdWrapper userIdObj,
+    public ResponseEntity<?> addUserToGroup(@RequestBody LongUserIdWrapper userIdObj,
                                                  @PathVariable Long groupId) {
 
         Long userId = userIdObj.getUserId();
@@ -96,7 +96,7 @@ public class UserGroupController {
     }
 
     @DeleteMapping(value = "/api/groups/{groupId}/members")
-    public ResponseEntity<String> removeUserFromGroup(@RequestBody LongUserIdWrapper userIdObj,
+    public ResponseEntity<?> removeUserFromGroup(@RequestBody LongUserIdWrapper userIdObj,
                                                  @PathVariable Long groupId) {
 
         Long userId = userIdObj.getUserId();
