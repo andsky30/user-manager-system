@@ -8,12 +8,12 @@ public class UserGroupDisplay {
 
     private String name;
 
-    private List<String> users;
+    private List<UserDisplay> users;
 
     public UserGroupDisplay() {
     }
 
-    public UserGroupDisplay(Long id, String name, List<String> users) {
+    public UserGroupDisplay(Long id, String name, List<UserDisplay> users) {
         this.id = id;
         this.name = name;
         this.users = users;
@@ -31,11 +31,11 @@ public class UserGroupDisplay {
         this.name = name;
     }
 
-    public List<String> getUsers() {
+    public List<UserDisplay> getUsers() {
         return users;
     }
 
-    public void setUsers(List<String> users) {
+    public void setUsers(List<UserDisplay> users) {
         this.users = users;
     }
 }

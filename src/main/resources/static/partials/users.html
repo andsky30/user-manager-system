@@ -1,7 +1,6 @@
 <div>
 
-    <a href="" ng-click="showUsersCtrl.showAddingForm();
-                        showUsersCtrl.hideEditForm()">Add new user</a>
+    <a href="" ng-click="showUsersCtrl.showAddingForm();showUsersCtrl.hideEditForm()">Add new user</a>
 
     <form ng-controller="AddUserController as addUserCtrl" ng-show="showAddForm">
         <input class="add_user_input" type = "text" placeholder="Username" ng-model="addUserCtrl.user.userName"><br />
@@ -50,8 +49,7 @@
                 <td>{{u.dateOfBirth}}</td>
                 <td>{{u.userGroups}}</td>
                 <td><a ng-href="#!users/confirm/{{u.id}}">Delete</a></td>
-                <td><a href=""  ng-click="showUsersCtrl.showEditForm();
-                 showUsersCtrl.setUser(u.id)">Edit</a></td>
+                <td><a href=""  ng-click="showUsersCtrl.showEditForm();showUsersCtrl.setUser(u.id)">Edit</a></td>
             </tr>
         </tbody>
     </table>

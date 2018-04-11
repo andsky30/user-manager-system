@@ -7,8 +7,10 @@ import com.skiba.usermanagersystem.model.User;
 import com.skiba.usermanagersystem.model.UserGroup;
 import com.skiba.usermanagersystem.repository.UserGroupRepository;
 import com.skiba.usermanagersystem.repository.UserRepository;
+import com.skiba.usermanagersystem.service.exceptions.UserAlreadyInGroupException;
 import com.skiba.usermanagersystem.service.exceptions.UserGroupNotFoundException;
 import com.skiba.usermanagersystem.service.exceptions.UserNotFoundException;
+import com.skiba.usermanagersystem.service.exceptions.UserNotInGroupException;
 import com.skiba.usermanagersystem.service.mapper.UserGroupCreationToUserGroupMapper;
 import com.skiba.usermanagersystem.service.mapper.UserGroupToUserGroupDisplayMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +105,8 @@ public class UserGroupServiceImpl implements UserGroupService {
             throw new UserGroupNotFoundException(groupId);
         } else if (user == null) {
             throw new UserNotFoundException(userId);
+        } else if (userGroup.getUsers().contains(user)) {
+            throw new UserAlreadyInGroupException(userId, groupId);
         } else {
             userGroup.getUsers().add(user);
             user.getUserGroups().add(userGroup);
@@ -121,6 +125,8 @@ public class UserGroupServiceImpl implements UserGroupService {
             throw new UserGroupNotFoundException(groupId);
         } else if (user == null) {
             throw new UserNotFoundException(userId);
+        } else if (!userGroup.getUsers().contains(user)) {
+            throw new UserNotInGroupException(userId, groupId);
         } else {
             userGroup.getUsers().remove(user);
             user.getUserGroups().remove(userGroup);

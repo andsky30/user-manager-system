@@ -11,14 +11,16 @@ import java.util.stream.Collectors;
 @Component
 public class UserGroupToUserGroupDisplayMapper {
 
+    private UserToUserDisplayMapper userToUserDisplayMapper = new UserToUserDisplayMapper();
+
     public UserGroupDisplay map(UserGroup userGroup) {
 
         return new UserGroupDisplay(
                 userGroup.getId(),
                 userGroup.getName(),
                 userGroup.getUsers().stream()
-                    .map(User::getUserName)
-                    .collect(Collectors.toCollection(ArrayList::new))
+                        .map(u -> userToUserDisplayMapper.map(u))
+                        .collect(Collectors.toCollection(ArrayList::new))
         );
     }
 }
