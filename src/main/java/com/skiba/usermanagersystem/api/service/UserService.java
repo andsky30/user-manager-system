@@ -19,4 +19,6 @@ public interface UserService {
 
     UserDisplay updateUser(UserCreation userCreation, Long userId);
 
+    List<UserDisplay> getAllUsersPossibleToAddToGroup(Long groupId);
+
 }

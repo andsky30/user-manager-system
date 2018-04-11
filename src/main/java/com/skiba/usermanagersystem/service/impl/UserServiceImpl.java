@@ -95,4 +95,14 @@ public class UserServiceImpl implements UserService {
             return userToUserDisplayMapper.map(savedUser);
         }
     }
+
+    @Override
+    public List<UserDisplay> getAllUsersPossibleToAddToGroup(Long groupId) {
+
+        String grId = groupId.toString();
+
+        return userRepository.findAllUsersPossibleToAddToGroup(grId).stream()
+                .map(userToUserDisplayMapper::map)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
 }

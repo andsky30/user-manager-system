@@ -32,18 +32,19 @@
                 <td>{{g.id}}</td>
                 <td>{{g.name}}</td>
                 <td>
-                    <a href="" ng-click="groupsCtrl.toggle_visibility(g.id)">Click to show/hide users</a>
-                    <ol id="{{g.id}}" style="display: none">
+                    <a href="" ng-click="groupsCtrl.toggle_visibility(g.id + 'show')">Click to show/hide users</a>
+                    <ol id="{{g.id}}show" style="display: none">
                         <li ng-repeat="u in g.users">
                             {{u.firstName}} {{u.lastName}} {{u.userName}}
-                            <a ng-click="groupsCtrl.deleteUserFromGroup(g.id, u.id)">Delete user</a>
+                            <a href="" ng-click="groupsCtrl.deleteUserFromGroup(g.id, u.id)">Delete user</a>
                         </li>
-                        <li><a>Add user to group</a>
-                            <div>
-                                <select>
-                                    <option ng-repeat="" value="">{{}}</option>
+                        <li><a ng-click="groupsCtrl.getUsersToAdd(g.id);
+                            groupsCtrl.toggle_visibility(g.id + 'add')">Add user to group</a>
+                            <div id="{{g.id}}add" style="display: none">
+                                <select id="user_to_add_select">
+                                    <option ng-repeat="uu in groupsCtrl.usersToAdd" value={{uu.id}}>{{uu.userName}}</option>
                                 </select>
-                                <input type="submit">
+                                <input type="submit" value="Add" ng-click="groupsCtrl.addUserToGroup(g.id)">
                             </div>
                         </li>
                     </ol>

@@ -26,6 +26,10 @@ angular
                 }
             });
     })
+    .constant('GROUP_USERS_TO_ADD_ENDPOINT', '/api/users/candidates_to_group/:id')
+    .factory('UsersToAdd', function($resource, GROUP_USERS_TO_ADD_ENDPOINT) {
+        return $resource(GROUP_USERS_TO_ADD_ENDPOINT);
+    })
     .service('Groups', function(Group) {
 
         this.getAll = function () {
@@ -54,7 +58,7 @@ angular
             location.reload();
         }
     })
-    .controller('GroupsController', function(Groups, GroupPUT, GroupUser, $routeParams, $location, $rootScope) {
+    .controller('GroupsController', function(Groups, GroupPUT, UsersToAdd, GroupUser, $routeParams, $location, $rootScope) {
         var vm = this;
         vm.groups = Groups.getAll();
 
@@ -73,32 +77,31 @@ angular
 
         vm.showEditForm = function () {
 
-            if ($rootScope.showEditForm === false){
+            if ($rootScope.showEditForm === false) {
                 $rootScope.showEditForm = true;
             }
         };
 
         vm.hideEditForm = function () {
 
-            if ($rootScope.showEditForm === true){
+            if ($rootScope.showEditForm === true) {
                 $rootScope.showEditForm = false;
             }
         };
 
-        vm.toggle_visibility = function(id) {
+        vm.toggle_visibility = function (id) {
             var e = document.getElementById(id);
-            if(e.style.display === 'block')
+            if (e.style.display === 'block')
                 e.style.display = 'none';
             else
                 e.style.display = 'block';
         };
 
-
         $rootScope.showAddGroupForm = false;
 
         vm.showAddingForm = function () {
 
-            if ($rootScope.showAddGroupForm === false){
+            if ($rootScope.showAddGroupForm === false) {
                 $rootScope.showAddGroupForm = true
             } else $rootScope.showAddGroupForm = false;
         };
@@ -109,7 +112,7 @@ angular
 
         vm.saveEditedGroup = function () {
             var groupId = vm.group.id;
-            GroupPUT.update({id:groupId},vm.group);
+            GroupPUT.update({id: groupId}, vm.group);
             location.reload()
         };
 
@@ -119,11 +122,18 @@ angular
             location.reload();
         };
 
-        vm.addUserToGroup = function (groupId, userId) {
+        vm.addUserToGroup = function (groupId) {
+            var e = document.getElementById("user_to_add_select");
+            var userId = e.options[e.selectedIndex].value;
             var obj = {"userId": userId};
             GroupUser.addUserToGroup({id: groupId}, obj);
             location.reload();
-        }
+        };
 
+        vm.getUsersToAdd = function (groupId) {
+            vm.usersToAdd = UsersToAdd.query({id: groupId});
+        }
     })
 ;
+
+

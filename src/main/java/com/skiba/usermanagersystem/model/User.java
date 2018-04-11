@@ -9,6 +9,19 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
+//@SqlResultSetMapping(
+//        name = "UserMapping",
+//        entities = {
+//                @EntityResult(
+//                        entityClass = User.class,
+//                        fields = {
+//                                @FieldResult(name = "id", column = "user_id"),
+//                                @FieldResult(name = "userName", column = "user_name"),
+//                                @FieldResult(name = "password", column = "password"),
+//                                @FieldResult(name = "firstName", column = "first_name"),
+//                                @FieldResult(name = "lastName", column = "last_name"),
+//                                @FieldResult(name = "firstName", column = "first_name"),
+//                                @FieldResult(name = "firstName", column = "first_name")})})
 public class User {
 
     @Id

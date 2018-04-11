@@ -75,4 +75,11 @@ public class UserController {
                 .body(updatedUser);
     }
 
+    @GetMapping(value = "/api/users/candidates_to_group/{groupId}")
+    public ResponseEntity<List<UserDisplay>> getUsersPossibleToAddToGroup(@PathVariable Long groupId) {
+        List<UserDisplay> allUsersPossibleToAddToGroup = userService.getAllUsersPossibleToAddToGroup(groupId);
+
+        return ResponseEntity.ok(allUsersPossibleToAddToGroup);
+    }
+
 }
