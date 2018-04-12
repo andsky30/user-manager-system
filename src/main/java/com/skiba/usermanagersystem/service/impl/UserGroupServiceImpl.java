@@ -134,4 +134,14 @@ public class UserGroupServiceImpl implements UserGroupService {
             userGroupRepository.save(userGroup);
         }
     }
+
+    @Override
+    public List<UserGroupDisplay> getAllGroupsPossibleToJoin(Long userId) {
+
+        String usId = userId.toString();
+
+        return userGroupRepository.findAllGroupsPossibleToJoin(usId).stream()
+                .map(userGroupToUserGroupDisplayMapper::map)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
 }

@@ -107,4 +107,11 @@ public class UserGroupController {
                 .status(HttpStatus.OK)
                 .body(String.format(MESSAGE_AFTER_USER_FROM_GROUP_DELETION, userId, groupId));
     }
+
+    @GetMapping(value = "/api/groups/candidates_to_join/{userId}")
+    public ResponseEntity<List<UserGroupDisplay>> getUsersPossibleToAddToGroup(@PathVariable Long userId) {
+        List<UserGroupDisplay> allGroupsPossibleTojoin = userGroupService.getAllGroupsPossibleToJoin(userId);
+
+        return ResponseEntity.ok(allGroupsPossibleTojoin);
+    }
 }

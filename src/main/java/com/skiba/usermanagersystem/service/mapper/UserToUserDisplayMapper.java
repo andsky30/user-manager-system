@@ -12,15 +12,13 @@ import java.util.stream.Collectors;
 public class UserToUserDisplayMapper {
 
     public static final DateTimeFormatter BIRTHDAY_DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
-    public static final String BIRTHDAY_DATE_PATTERN = "yyyy-MM-dd";
+
+    private UserGroupToUserGroupDisplayToJoinMapper userGroupToUserGroupDisplayToJoinMapper =
+            new UserGroupToUserGroupDisplayToJoinMapper();
 
     public UserDisplay map(User user) {
 
         String dateOfBirth = user.getDateOfBirth().format(BIRTHDAY_DATE_FORMATTER);
-
-        ArrayList<String> groupNames = user.getUserGroups().stream()
-                .map(userGroup -> userGroup.getName())
-                .collect(Collectors.toCollection(ArrayList::new));
 
         UserDisplay userDisplay = new UserDisplay(
                 user.getId(),
@@ -29,7 +27,9 @@ public class UserToUserDisplayMapper {
                 user.getFirstName(),
                 user.getLastName(),
                 dateOfBirth,
-                groupNames);
+                user.getUserGroups().stream()
+                    .map(g -> userGroupToUserGroupDisplayToJoinMapper.map(g))
+                    .collect(Collectors.toCollection(ArrayList::new)));
 
         return userDisplay;
     }

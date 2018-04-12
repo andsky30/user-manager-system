@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('usersModule', [])
+    .module('usersModule', ['groupsModule'])
     .constant('USER_ENDPOINT', '/api/users/:id')
     .factory('User', function ($resource, USER_ENDPOINT) {
         return $resource(USER_ENDPOINT);
@@ -11,6 +11,10 @@ angular
             {
                 'update': {method: 'PUT'}
             })
+    })
+    .constant('GROUP_USERS_TO_JOIN_ENDPOINT', '/api/groups/candidates_to_join/:id')
+    .factory('GroupsToJoin', function ($resource, GROUP_USERS_TO_JOIN_ENDPOINT) {
+        return $resource(GROUP_USERS_TO_JOIN_ENDPOINT);
     })
     .service('Users', function (User) {
 
@@ -53,7 +57,7 @@ angular
             return valid;
         }
     })
-    .controller('AddUserController', function (Users, User, UserUtils) {
+    .controller('AddUserController', function (Users, GroupUser, User, UserUtils) {
         var vm = this;
         vm.user = new User();
         vm.saveUser = function () {
@@ -66,7 +70,7 @@ angular
             }
         };
     })
-    .controller('ShowUsersController', function (Users, UserPUT, UserUtils, $routeParams, $location, $rootScope) {
+    .controller('ShowUsersController', function (Users, UserPUT, UserUtils, GroupUser, GroupsToJoin, $routeParams, $location, $rootScope) {
         var vm = this;
         vm.users = Users.getAll();
 
@@ -118,7 +122,36 @@ angular
 
         vm.historyBack = function () {
             window.history.back();
-        }
+        };
+
+        vm.toggle_visibility = function (id) {
+            var e = document.getElementById(id);
+            if (e.style.display === 'block')
+                e.style.display = 'none';
+            else
+                e.style.display = 'block';
+        };
+
+        vm.leaveGroup = function (groupId, userId) {
+            var r = confirm("Are you sure you want to leave this group? ");
+            if (r === true) {
+                var obj = {"userId": userId};
+                GroupUser.delete({id: groupId}, obj);
+                location.reload();
+            }
+        };
+
+        vm.getGroupsToJoin = function (userId) {
+            vm.groupsToJoin = GroupsToJoin.query({id: userId});
+        };
+
+        vm.joinGroup = function (userId) {
+            var e = document.getElementById("group_to_join_select");
+            var groupId = e.options[e.selectedIndex].value;
+            var obj = {"userId": userId};
+            GroupUser.addUserToGroup({id: groupId}, obj);
+            location.reload();
+        };
 
     })
 

@@ -153,7 +153,7 @@ a:hover
     background-color: #f0dda8;
 }
 
-#user_to_add_select
+#user_to_add_select, #group_to_join_select
 {
     width: 200px;
     height: 25px;

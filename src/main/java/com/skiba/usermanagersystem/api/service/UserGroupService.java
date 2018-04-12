@@ -22,4 +22,6 @@ public interface UserGroupService {
 
     void removeUserFromGroup(Long groupId, Long userId);
 
+    List<UserGroupDisplay> getAllGroupsPossibleToJoin(Long userId);
+
 }

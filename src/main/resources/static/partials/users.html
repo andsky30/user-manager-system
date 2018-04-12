@@ -45,15 +45,36 @@
             </thead>
             <tbody>
                 <tr class="users_table_row" ng-repeat="u in showUsersCtrl.users" ng-class-odd="'odd'">
-                    <td>{{u.id}}</td>
-                    <td>{{u.userName}}</td>
-                    <td>{{u.password}}</td>
-                    <td>{{u.firstName}}</td>
-                    <td>{{u.lastName}}</td>
-                    <td>{{u.dateOfBirth}}</td>
-                    <td>{{u.userGroups}}</td>
-                    <td><a ng-href="#!users/confirm/{{u.id}}">Delete</a></td>
-                    <td><a href=""  ng-click="showUsersCtrl.showEditForm();showUsersCtrl.setUser(u.id)">Edit</a></td>
+                    <td width="30px">{{u.id}}</td>
+                    <td width="10%">{{u.userName}}</td>
+                    <td width="10%">{{u.password}}</td>
+                    <td width="10%"> {{u.firstName}}</td>
+                    <td width="15%">{{u.lastName}}</td>
+                    <td width="10%">{{u.dateOfBirth}}</td>
+                    <td>
+                        <a href="" ng-click="showUsersCtrl.toggle_visibility(u.id + 'show')">Click to show/hide groups</a>
+                        <ol id="{{u.id}}show" style="display: none">
+
+                            <li ng-repeat="g in u.userGroups" style="height: 35px">
+                                {{g.name}}
+                                <span class="delete_user_fromt_gr_span">
+                                    <a href="" ng-click="showUsersCtrl.leaveGroup(g.id, u.id)">Leave group</a>
+                                </span>
+                            </li>
+
+                            <li class="user_add_form"><a href="" ng-click="showUsersCtrl.getGroupsToJoin(u.id); showUsersCtrl.toggle_visibility(u.id + 'add')">Join group</a>
+                                <div id="{{u.id}}add" style="display: none">
+                                    <select id="group_to_join_select">
+                                        <option ng-repeat="gg in showUsersCtrl.groupsToJoin" value={{gg.id}}>{{gg.name}}</option>
+                                    </select>
+                                    <button class="add_user_to_gr_submit" ng-click="showUsersCtrl.joinGroup(u.id)">Join group</button>
+                                </div>
+                            </li>
+
+                        </ol>
+                    </td>
+                    <td width="10%"><a ng-href="#!users/confirm/{{u.id}}">Delete</a></td>
+                    <td width="10%"><a href=""  ng-click="showUsersCtrl.showEditForm();showUsersCtrl.setUser(u.id)">Edit</a></td>
                 </tr>
             </tbody>
         </table>

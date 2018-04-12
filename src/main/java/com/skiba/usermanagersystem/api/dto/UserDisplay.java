@@ -16,13 +16,13 @@ public class UserDisplay {
 
     private String dateOfBirth;
 
-    private List<String> userGroups;
+    private List<UserGroupDisplayToJoin> userGroups;
 
     public UserDisplay() {
     }
 
     public UserDisplay(Long id, String userName, String password,
-                       String firstName, String lastName, String dateOfBirth, List<String> userGroups) {
+                       String firstName, String lastName, String dateOfBirth, List<UserGroupDisplayToJoin> userGroups) {
         this.id = id;
         this.userName = userName;
         this.password = password;
@@ -76,11 +76,11 @@ public class UserDisplay {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<String> getUserGroups() {
+    public List<UserGroupDisplayToJoin> getUserGroups() {
         return userGroups;
     }
 
-    public void setUserGroups(List<String> userGroups) {
+    public void setUserGroups(List<UserGroupDisplayToJoin> userGroups) {
         this.userGroups = userGroups;
     }
 }
