@@ -87,6 +87,10 @@ angular
             var userId = vm.user.id;
             UserPUT.update({id:userId},vm.user);
             location.reload()
+        };
+
+        vm.historyBack = function () {
+            window.history.back();
         }
 
     })

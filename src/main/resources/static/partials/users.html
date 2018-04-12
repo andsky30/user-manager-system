@@ -1,57 +1,63 @@
 <div>
+    <div id="add_user_link">
+        <a href="" ng-click="showUsersCtrl.showAddingForm();showUsersCtrl.hideEditForm()">Add new user</a>
+    </div>
 
-    <a href="" ng-click="showUsersCtrl.showAddingForm();showUsersCtrl.hideEditForm()">Add new user</a>
 
-    <form ng-controller="AddUserController as addUserCtrl" ng-show="showAddForm">
+    <form class="add_form" ng-controller="AddUserController as addUserCtrl" ng-show="showAddForm">
         <input class="add_user_input" type = "text" placeholder="Username" ng-model="addUserCtrl.user.userName"><br />
         <input class="add_user_input" type = "password" placeholder="Password" ng-model="addUserCtrl.user.password"><br />
         <input class="add_user_input" type = "text" placeholder="First Name" ng-model="addUserCtrl.user.firstName"><br />
         <input class="add_user_input" type = "text" placeholder="Last Name" ng-model="addUserCtrl.user.lastName"><br />
         <input class="add_user_input" type = "text" placeholder="Date of birth" ng-model="addUserCtrl.user.dateOfBirth"><br />
-        <button id="add_user_input" ng-click="addUserCtrl.saveUser()">Add user</button>
-        <button id="add_cancel_input" ng-click="showUsersCtrl.showAddingForm()">Cancel</button>
+        <button class="add_user_submit" ng-click="addUserCtrl.saveUser()">Add user</button>
+        <button class="add_user_submit" ng-click="showUsersCtrl.showAddingForm()">Cancel</button>
     </form>
 
-    <br/>
-    <br/>
 
     <form  ng-show="showEditForm">
-        <input class="add_user_input" type = "text" placeholder="Username" ng-model="showUsersCtrl.user.userName"><br />
-        <input class="add_user_input" type = "password" placeholder="Password" ng-model="showUsersCtrl.user.password"><br />
-        <input class="add_user_input" type = "text" placeholder="First Name" ng-model="showUsersCtrl.user.firstName"><br />
-        <input class="add_user_input" type = "text" placeholder="Last Name" ng-model="showUsersCtrl.user.lastName"><br />
-        <input class="add_user_input" type = "text" placeholder="Date of birth" ng-model="showUsersCtrl.user.dateOfBirth"><br />
-        <button id="edit_user_input" ng-click="showUsersCtrl.saveEditedUser()">Save user</button>
-        <button id="edit_cancel_input" ng-click="showUsersCtrl.hideEditForm()">Cancel</button>
+        <input class="edit_user_input" type = "text" placeholder="Username" ng-model="showUsersCtrl.user.userName"><br />
+        <input class="edit_user_input" type = "password" placeholder="Password" ng-model="showUsersCtrl.user.password"><br />
+        <input class="edit_user_input" type = "text" placeholder="First Name" ng-model="showUsersCtrl.user.firstName"><br />
+        <input class="edit_user_input" type = "text" placeholder="Last Name" ng-model="showUsersCtrl.user.lastName"><br />
+        <input class="edit_user_input" type = "text" placeholder="Date of birth" ng-model="showUsersCtrl.user.dateOfBirth"><br />
+        <button class="edit_user_submit" ng-click="showUsersCtrl.saveEditedUser()">Save user</button>
+        <button class="edit_user_submit" ng-click="showUsersCtrl.hideEditForm()">Cancel</button>
     </form>
 
-    <h1>List of all users</h1>
+    <div class="table_div">
 
-    <table id="users_table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>USER NAME</th>
-                <th>PASSWORD</th>
-                <th>FIRST NAME</th>
-                <th>LAST NAME</th>
-                <th>DATE OF BIRTH</th>
-                <th>GROUPS</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="u in showUsersCtrl.users">
-                <td>{{u.id}}</td>
-                <td>{{u.userName}}</td>
-                <td>{{u.password}}</td>
-                <td>{{u.firstName}}</td>
-                <td>{{u.lastName}}</td>
-                <td>{{u.dateOfBirth}}</td>
-                <td>{{u.userGroups}}</td>
-                <td><a ng-href="#!users/confirm/{{u.id}}">Delete</a></td>
-                <td><a href=""  ng-click="showUsersCtrl.showEditForm();showUsersCtrl.setUser(u.id)">Edit</a></td>
-            </tr>
-        </tbody>
-    </table>
+        <div class="table_title_div">
+            <h1>List of all users</h1>
+        </div>
+
+        <table id="users_table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>USER NAME</th>
+                    <th>PASSWORD</th>
+                    <th>FIRST NAME</th>
+                    <th>LAST NAME</th>
+                    <th>DATE OF BIRTH</th>
+                    <th>GROUPS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="users_table_row" ng-repeat="u in showUsersCtrl.users" ng-class-odd="'odd'">
+                    <td>{{u.id}}</td>
+                    <td>{{u.userName}}</td>
+                    <td>{{u.password}}</td>
+                    <td>{{u.firstName}}</td>
+                    <td>{{u.lastName}}</td>
+                    <td>{{u.dateOfBirth}}</td>
+                    <td>{{u.userGroups}}</td>
+                    <td><a ng-href="#!users/confirm/{{u.id}}">Delete</a></td>
+                    <td><a href=""  ng-click="showUsersCtrl.showEditForm();showUsersCtrl.setUser(u.id)">Edit</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
 
 </div>

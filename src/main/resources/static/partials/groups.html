@@ -1,58 +1,69 @@
 <div>
 
-    <a href="" ng-click="groupsCtrl.showAddingForm(); groupsCtrl.hideEditForm()">Add new group</a>
+    <div id="add_group_link">
+        <a href="" ng-click="groupsCtrl.showAddingForm(); groupsCtrl.hideEditForm()">Add new group</a>
+    </div>
 
     <form ng-controller="AddGroupController as addGroupCtrl" ng-show="showAddGroupForm">
         <input class="add_group_input" type = "text" placeholder="Group name" ng-model="addGroupCtrl.group.name"><br />
-        <button id="add_group_input" ng-click="addGroupCtrl.saveGroup()">Add group</button>
-        <button id="add_group_cancel_input" ng-click="groupsCtrl.showAddingForm()">Cancel</button>
+        <button class="add_group_submit" ng-click="addGroupCtrl.saveGroup()">Add group</button>
+        <button class="add_group_submit" ng-click="groupsCtrl.showAddingForm()">Cancel</button>
     </form>
 
-    <br/>
-    <br/>
 
     <form ng-show="showEditForm">
-        <input class="add_group_input" type = "text" placeholder="Group name" ng-model="groupsCtrl.group.name"><br />
-        <button id="edit_group_input" ng-click="groupsCtrl.saveEditedGroup()">Save group</button>
-        <button id="edit_cancel_input" ng-click="groupsCtrl.hideEditForm()">Cancel</button>
+        <input class="edit_group_input" type = "text" placeholder="Group name" ng-model="groupsCtrl.group.name"><br />
+        <button class="edit_group_submit" ng-click="groupsCtrl.saveEditedGroup()">Save group</button>
+        <button class="edit_group_submit" ng-click="groupsCtrl.hideEditForm()">Cancel</button>
     </form>
 
-    <h1>List of all groups</h1>
+    <div class="table_div">
 
-    <table id="users_table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>GROUP NAME</th>
-                <th>USERS</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="g in groupsCtrl.groups">
-                <td>{{g.id}}</td>
-                <td>{{g.name}}</td>
-                <td>
-                    <a href="" ng-click="groupsCtrl.toggle_visibility(g.id + 'show')">Click to show/hide users</a>
-                    <ol id="{{g.id}}show" style="display: none">
-                        <li ng-repeat="u in g.users">
-                            {{u.firstName}} {{u.lastName}} {{u.userName}}
-                            <a href="" ng-click="groupsCtrl.deleteUserFromGroup(g.id, u.id)">Delete user</a>
-                        </li>
-                        <li><a ng-click="groupsCtrl.getUsersToAdd(g.id);
-                            groupsCtrl.toggle_visibility(g.id + 'add')">Add user to group</a>
-                            <div id="{{g.id}}add" style="display: none">
-                                <select id="user_to_add_select">
-                                    <option ng-repeat="uu in groupsCtrl.usersToAdd" value={{uu.id}}>{{uu.userName}}</option>
-                                </select>
-                                <input type="submit" value="Add" ng-click="groupsCtrl.addUserToGroup(g.id)">
-                            </div>
-                        </li>
-                    </ol>
-                </td>
-                <td><a ng-href="#!groups/confirm/{{g.id}}">Delete group</a></td>
-                <td><a href=""  ng-click="groupsCtrl.showEditForm(); groupsCtrl.setGroup(g.id)">Edit group's name</a></td>
-            </tr>
-        </tbody>
-    </table>
+        <div class="table_title_div">
+            <h1>List of all groups</h1>
+        </div>
+
+        <table id="groups_table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>GROUP NAME</th>
+                    <th>USERS IN GROUP</th>
+                    <th>MEMBERS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="groups_table_row" ng-repeat="g in groupsCtrl.groups" ng-class-odd="'odd'">
+                    <td width="50px">{{g.id}}</td>
+                    <td width="300px">{{g.name}}</td>
+                    <td width="200px">{{g.users.length}}</td>
+                    <td class="groups_table_users_td">
+                        <a href="" ng-click="groupsCtrl.toggle_visibility(g.id + 'show')">Click to show/hide users</a>
+                        <ol id="{{g.id}}show" style="display: none">
+
+                            <li ng-repeat="u in g.users" style="height: 35px">
+                                {{u.firstName}} {{u.lastName}} [Username: {{u.userName}}]
+                                <span class="delete_user_fromt_gr_span">
+                                    <a href="" ng-click="groupsCtrl.deleteUserFromGroup(g.id, u.id)">Delete from group</a>
+                                </span>
+                            </li>
+
+                            <li class="user_add_form"><a href="" ng-click="groupsCtrl.getUsersToAdd(g.id);groupsCtrl.toggle_visibility(g.id + 'add')">Add user to group</a>
+                                <div id="{{g.id}}add" style="display: none">
+                                    <select id="user_to_add_select">
+                                        <option ng-repeat="uu in groupsCtrl.usersToAdd" value={{uu.id}}>{{uu.userName}}</option>
+                                    </select>
+                                    <button class="add_user_to_gr_submit" ng-click="groupsCtrl.addUserToGroup(g.id)">Add user</button>
+                                </div>
+                            </li>
+
+                        </ol>
+                    </td>
+                    <td width="200px"><a ng-href="#!groups/confirm/{{g.id}}">Delete group</a></td>
+                    <td width="200px"><a href=""  ng-click="groupsCtrl.showEditForm(); groupsCtrl.setGroup(g.id)">Edit group's name</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 </div>

@@ -1,13 +1,15 @@
+
 <div>
 
-        <h2>Are you sure you want to delete this user?</h2>
-
-        <h4>ID: {{showUsersCtrl.user.id}}</h4>
-        <h4>User name: {{showUsersCtrl.user.userName}}</h4>
-        <h4>First name: {{showUsersCtrl.user.firstName}}</h4>
-        <h4>Last name: {{showUsersCtrl.user.lastName}}</h4>
-        <br>
-        <a href="" ng-click="showUsersCtrl.deleteUser(showUsersCtrl.user.id)">Delete</a>
-        <a href="javascript:history.back()">Go Back</a>
+        <div class="deletion_main_div">
+                <h2>Are you sure you want to delete this user?</h2>
+                <h4>ID: {{showUsersCtrl.user.id}}</h4>
+                <h4>User name: {{showUsersCtrl.user.userName}}</h4>
+                <h4>First name: {{showUsersCtrl.user.firstName}}</h4>
+                <h4>Last name: {{showUsersCtrl.user.lastName}}</h4>
+                <br>
+                <button class="delete_user_submit" href="" ng-click="showUsersCtrl.deleteUser(showUsersCtrl.user.id)">Delete</button>
+                <button class="delete_user_submit" ng-click="showUsersCtrl.historyBack()">Go Back</button>
+        </div>
 
 </div>

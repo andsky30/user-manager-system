@@ -1,19 +1,19 @@
 'use strict';
 
 angular
-    .module('groupsModule',[])
+    .module('groupsModule', [])
     .constant('GROUP_ENDPOINT', '/api/groups/:id')
-    .factory('Group', function($resource, GROUP_ENDPOINT) {
+    .factory('Group', function ($resource, GROUP_ENDPOINT) {
         return $resource(GROUP_ENDPOINT);
     })
-    .factory('GroupPUT', function($resource, GROUP_ENDPOINT) {
+    .factory('GroupPUT', function ($resource, GROUP_ENDPOINT) {
         return $resource(GROUP_ENDPOINT, null,
             {
-                'update': { method:'PUT' }
+                'update': {method: 'PUT'}
             })
     })
     .constant('GROUP_USER_ENDPOINT', '/api/groups/:id/members')
-    .factory('GroupUser', function($resource, GROUP_USER_ENDPOINT) {
+    .factory('GroupUser', function ($resource, GROUP_USER_ENDPOINT) {
         return $resource(GROUP_USER_ENDPOINT, null,
             {
                 'delete': {
@@ -21,16 +21,16 @@ angular
                     hasBody: true,
                     headers: {"Content-Type": "application/json;charset=UTF-8"}
                 },
-                'addUserToGroup':{
+                'addUserToGroup': {
                     method: 'POST'
                 }
             });
     })
     .constant('GROUP_USERS_TO_ADD_ENDPOINT', '/api/users/candidates_to_group/:id')
-    .factory('UsersToAdd', function($resource, GROUP_USERS_TO_ADD_ENDPOINT) {
+    .factory('UsersToAdd', function ($resource, GROUP_USERS_TO_ADD_ENDPOINT) {
         return $resource(GROUP_USERS_TO_ADD_ENDPOINT);
     })
-    .service('Groups', function(Group) {
+    .service('Groups', function (Group) {
 
         this.getAll = function () {
             return Group.query();
@@ -48,17 +48,17 @@ angular
             return Group.delete({id: index})
         };
     })
-    .controller('AddGroupController', function(Groups, Group) {
+    .controller('AddGroupController', function (Groups, Group) {
         var vm = this;
         vm.group = new Group();
-        vm.saveGroup = function() {
+        vm.saveGroup = function () {
             Groups.add(vm.group);
             vm.group = new Group();
 
             location.reload();
         }
     })
-    .controller('GroupsController', function(Groups, GroupPUT, UsersToAdd, GroupUser, $routeParams, $location, $rootScope) {
+    .controller('GroupsController', function (Groups, GroupPUT, UsersToAdd, GroupUser, $routeParams, $location, $rootScope) {
         var vm = this;
         vm.groups = Groups.getAll();
 
@@ -117,9 +117,12 @@ angular
         };
 
         vm.deleteUserFromGroup = function (groupId, userId) {
-            var obj = {"userId": userId};
-            GroupUser.delete({id: groupId}, obj);
-            location.reload();
+            var r = confirm("Are you sure you want to delete this user from group? ");
+            if (r === true) {
+                var obj = {"userId": userId};
+                GroupUser.delete({id: groupId}, obj);
+                location.reload();
+            }
         };
 
         vm.addUserToGroup = function (groupId) {
@@ -132,6 +135,10 @@ angular
 
         vm.getUsersToAdd = function (groupId) {
             vm.usersToAdd = UsersToAdd.query({id: groupId});
+        }
+
+        vm.historyBack = function () {
+            window.history.back();
         }
     })
 ;

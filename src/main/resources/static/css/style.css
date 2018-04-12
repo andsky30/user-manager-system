@@ -1,20 +1,104 @@
 body
 {
-    background-color: #e2f1c4;
+    background: url(/background/intersection.png);
+    background-attachment: fixed;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.main_container
+{
+    width: 80%;
+    margin-left: auto;
+    margin-right:auto;
+    padding-top: 75px;
+}
+
+.main_nav_bar
+{
+    background-color: #9f9f9f;
+    height: 60px;
+    width: 100%;
+    position: fixed;
+    text-align: center;
+}
+
+.main_nav_bar .main_menu_option
+{
+    border-radius: 10px;
+    display: inline-block;
+    background-color: whitesmoke;
+    margin-top: 10px;
+    padding-top: 5px;
+    width: 150px;
+    height: 35px;
+    text-align: center;
+    font-size: 120%;
+}
+
+.main_menu_option:hover
+{
+    background-color: #ededed;
 }
 
 a
 {
-    font-size: 130%;
-    color: black;
+    font-size: 120%;
+    color: #aa6c2c;
     text-decoration: none;
 }
 
 a:hover
 {
-    color: red;
+    color: #752a20;
 }
 
+#add_user_link, #add_group_link
+{
+    font-size: 150%;
+    margin-bottom: 20px;
+}
+
+.add_user_input, .edit_user_input, .add_group_input, .edit_group_input
+{
+    width: 250px;
+    height: 25px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.add_user_submit, .edit_user_submit,
+.delete_user_submit, .add_group_submit, .edit_group_submit, .delete_group_submit
+{
+    width: 125px;
+    height: 30px;
+    border-radius: 8px;
+    background-color: #f0dda8;
+    font-size: 110%;
+    margin-bottom: 15px;
+}
+
+.table_div
+{
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.table_title_div
+{
+    width: 100%;
+    background-color: #c3c3c3;
+    margin-bottom: 15px;
+}
+
+.table_title_div h1
+{
+    margin: 0;
+}
 
 #users_table
 {
@@ -22,40 +106,63 @@ a:hover
     text-align: left;
 }
 
-#birthdays_table
+#users_table tr
+{
+    height: 40px;
+}
+.users_table_row.odd
+{
+    background-color: #e2dfda;
+}
+
+.deletion_main_div
+{
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#groups_table
 {
     width: 100%;
     text-align: left;
 }
 
-.login_input, .register_input, .birthday_input
+#groups_table tr
 {
-    width: 150px;
-    height: 25px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    text-align: left;
+
+    height: 40px;
 }
 
-#login_submit, #add_note_button, #register_button ,#add_birthday_button
+.groups_table_row.odd
 {
-    width: 150px;
+    background-color: #e2dfda;
+}
+
+.user_add_form
+{
+    list-style-type: none;
+    margin-top: 20px;
+}
+
+.add_user_to_gr_submit
+{
+    width: 100px;
     height: 30px;
-    border-radius: 10px;
-    background-color: #7dd675;
-    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #f0dda8;
 }
 
-#note_text_area
+#user_to_add_select
 {
-    width: 300px;
-    height: 150px;
-    max-width: 400px;
-    max-height: 200px;
+    width: 200px;
+    height: 25px;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
 
-#profile_nav_bar a, #main_nav_bar a
+.delete_user_fromt_gr_span
 {
-
+    float: right;
     margin-right: 20px;
 }
