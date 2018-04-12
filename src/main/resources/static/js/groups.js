@@ -48,17 +48,31 @@ angular
             return Group.delete({id: index})
         };
     })
-    .controller('AddGroupController', function (Groups, Group) {
+    .service('GroupUtils', function () {
+
+        this.isGroupInputValid = function (formName) {
+
+            var valid = true;
+
+            if (document.forms[formName].elements.item(0).value === "") {
+                valid = false;
+                alert("Inputs cannot be empty!");
+            }
+            return valid;
+        }
+    })
+    .controller('AddGroupController', function (Groups, Group, GroupUtils) {
         var vm = this;
         vm.group = new Group();
         vm.saveGroup = function () {
-            Groups.add(vm.group);
-            vm.group = new Group();
-
-            location.reload();
+            if (GroupUtils.isGroupInputValid('add_group_form')) {
+                Groups.add(vm.group);
+                vm.group = new Group();
+                location.reload();
+            }
         }
     })
-    .controller('GroupsController', function (Groups, GroupPUT, UsersToAdd, GroupUser, $routeParams, $location, $rootScope) {
+    .controller('GroupsController', function (Groups, GroupPUT, UsersToAdd, GroupUser, GroupUtils, $routeParams, $location, $rootScope) {
         var vm = this;
         vm.groups = Groups.getAll();
 
@@ -111,9 +125,12 @@ angular
         };
 
         vm.saveEditedGroup = function () {
-            var groupId = vm.group.id;
-            GroupPUT.update({id: groupId}, vm.group);
-            location.reload()
+            if (GroupUtils.isGroupInputValid('edit_group_form')) {
+
+                var groupId = vm.group.id;
+                GroupPUT.update({id: groupId}, vm.group);
+                location.reload()
+            }
         };
 
         vm.deleteUserFromGroup = function (groupId, userId) {
@@ -135,7 +152,7 @@ angular
 
         vm.getUsersToAdd = function (groupId) {
             vm.usersToAdd = UsersToAdd.query({id: groupId});
-        }
+        };
 
         vm.historyBack = function () {
             window.history.back();

@@ -1,18 +1,18 @@
 'use strict';
 
 angular
-.module('usersModule',[])
+    .module('usersModule', [])
     .constant('USER_ENDPOINT', '/api/users/:id')
-    .factory('User', function($resource, USER_ENDPOINT) {
-            return $resource(USER_ENDPOINT);
+    .factory('User', function ($resource, USER_ENDPOINT) {
+        return $resource(USER_ENDPOINT);
     })
-    .factory('UserPUT', function($resource, USER_ENDPOINT) {
+    .factory('UserPUT', function ($resource, USER_ENDPOINT) {
         return $resource(USER_ENDPOINT, null,
             {
-                'update': { method:'PUT' }
+                'update': {method: 'PUT'}
             })
     })
-    .service('Users', function(User) {
+    .service('Users', function (User) {
 
         this.getAll = function () {
             return User.query();
@@ -23,7 +23,7 @@ angular
         };
 
         this.add = function (user) {
-            user.$save()
+            User.save(user)
         };
 
         this.delete = function (index) {
@@ -31,17 +31,42 @@ angular
         };
 
     })
-    .controller('AddUserController', function(Users, User) {
+    .service('UserUtils', function () {
+
+        this.isUserInputValid = function (formName) {
+
+            var valid = true;
+            var i;
+
+            for (i = 0; i < 5; i++) {
+                if (document.forms[formName].elements.item(i).value === "") {
+                    valid = false;
+                    alert("Inputs cannot be empty!");
+                    break;
+                }
+                if (i === 4 && !document.forms[formName].elements.item(i).value.match(/(\d{4})-(\d{2})-(\d{2})/)) {
+                    alert("Wrong date format! Should be: yyyy-MM-dd");
+                    valid = false;
+                    break;
+                }
+            }
+            return valid;
+        }
+    })
+    .controller('AddUserController', function (Users, User, UserUtils) {
         var vm = this;
         vm.user = new User();
-        vm.saveUser = function() {
-            Users.add(vm.user);
-            vm.user = new User();
+        vm.saveUser = function () {
 
-            location.reload();
+            if (UserUtils.isUserInputValid('add_user_form')) {
+                Users.add(vm.user);
+                vm.user = new User();
+                location.reload();
+
+            }
         };
     })
-    .controller('ShowUsersController', function(Users, UserPUT, $routeParams, $location, $rootScope) {
+    .controller('ShowUsersController', function (Users, UserPUT, UserUtils, $routeParams, $location, $rootScope) {
         var vm = this;
         vm.users = Users.getAll();
 
@@ -60,21 +85,21 @@ angular
 
         vm.showAddingForm = function () {
 
-            if ($rootScope.showAddForm === false){
+            if ($rootScope.showAddForm === false) {
                 $rootScope.showAddForm = true;
             } else $rootScope.showAddForm = false;
         };
 
         vm.showEditForm = function () {
 
-            if ($rootScope.showEditForm === false){
+            if ($rootScope.showEditForm === false) {
                 $rootScope.showEditForm = true;
             }
         };
 
         vm.hideEditForm = function () {
 
-            if ($rootScope.showEditForm === true){
+            if ($rootScope.showEditForm === true) {
                 $rootScope.showEditForm = false;
             }
         };
@@ -82,11 +107,13 @@ angular
         vm.setUser = function (userId) {
             vm.user = Users.get(userId);
         };
-        
+
         vm.saveEditedUser = function () {
-            var userId = vm.user.id;
-            UserPUT.update({id:userId},vm.user);
-            location.reload()
+            if (UserUtils.isUserInputValid('edit_user_form')) {
+                var userId = vm.user.id;
+                UserPUT.update({id: userId}, vm.user);
+                location.reload()
+            }
         };
 
         vm.historyBack = function () {
@@ -94,6 +121,6 @@ angular
         }
 
     })
-    
+
 
 ;

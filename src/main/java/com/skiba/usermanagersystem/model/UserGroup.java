@@ -3,6 +3,8 @@ package com.skiba.usermanagersystem.model;
 import javax.persistence.Id;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class UserGroup {
     @Column(name = "group_id")
     private Long id;
 
+    @NotNull
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY,

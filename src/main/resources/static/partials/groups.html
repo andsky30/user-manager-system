@@ -4,14 +4,14 @@
         <a href="" ng-click="groupsCtrl.showAddingForm(); groupsCtrl.hideEditForm()">Add new group</a>
     </div>
 
-    <form ng-controller="AddGroupController as addGroupCtrl" ng-show="showAddGroupForm">
-        <input class="add_group_input" type = "text" placeholder="Group name" ng-model="addGroupCtrl.group.name"><br />
+    <form id="add_group_form" ng-controller="AddGroupController as addGroupCtrl" ng-show="showAddGroupForm">
+        <input class="add_group_input" type = "text" placeholder="Group name" required="required" ng-model="addGroupCtrl.group.name"><br />
         <button class="add_group_submit" ng-click="addGroupCtrl.saveGroup()">Add group</button>
         <button class="add_group_submit" ng-click="groupsCtrl.showAddingForm()">Cancel</button>
     </form>
 
 
-    <form ng-show="showEditForm">
+    <form id="edit_group_form" ng-show="showEditForm">
         <input class="edit_group_input" type = "text" placeholder="Group name" ng-model="groupsCtrl.group.name"><br />
         <button class="edit_group_submit" ng-click="groupsCtrl.saveEditedGroup()">Save group</button>
         <button class="edit_group_submit" ng-click="groupsCtrl.hideEditForm()">Cancel</button>

@@ -3,47 +3,34 @@ package com.skiba.usermanagersystem.model;
 import javax.persistence.Id;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
-//@SqlResultSetMapping(
-//        name = "UserMapping",
-//        entities = {
-//                @EntityResult(
-//                        entityClass = User.class,
-//                        fields = {
-//                                @FieldResult(name = "id", column = "user_id"),
-//                                @FieldResult(name = "userName", column = "user_name"),
-//                                @FieldResult(name = "password", column = "password"),
-//                                @FieldResult(name = "firstName", column = "first_name"),
-//                                @FieldResult(name = "lastName", column = "last_name"),
-//                                @FieldResult(name = "firstName", column = "first_name"),
-//                                @FieldResult(name = "firstName", column = "first_name")})})
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private Long id;
-
+    @NotNull
     private String userName;
-
+    @NotNull
     private String password;
-
+    @NotNull
     private String firstName;
-
+    @NotNull
     private String lastName;
-
+    @NotNull
+    @PastOrPresent
     private LocalDate dateOfBirth;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-//            CascadeType.PERSIST,
-//                    CascadeType.MERGE,
-            })
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_userGroups",
             joinColumns = @JoinColumn(name = "user_id"),

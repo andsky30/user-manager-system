@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/api/users")
-    public ResponseEntity<UserDisplay> addUser(@RequestBody UserCreation userCreation) {
+    public ResponseEntity<UserDisplay> addUser(@RequestBody @Valid UserCreation userCreation) {
 
         UserDisplay saved = userService.addUser(userCreation);
 
