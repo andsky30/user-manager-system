@@ -146,7 +146,7 @@ angular
         };
 
         vm.joinGroup = function (userId) {
-            var e = document.getElementById("group_to_join_select");
+            var e = document.getElementById("group_to_join_select" + userId);
             var groupId = e.options[e.selectedIndex].value;
             var obj = {"userId": userId};
             GroupUser.addUserToGroup({id: groupId}, obj);

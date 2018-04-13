@@ -143,7 +143,7 @@ angular
         };
 
         vm.addUserToGroup = function (groupId) {
-            var e = document.getElementById("user_to_add_select");
+            var e = document.getElementById("user_to_add_select" + groupId);
             var userId = e.options[e.selectedIndex].value;
             var obj = {"userId": userId};
             GroupUser.addUserToGroup({id: groupId}, obj);

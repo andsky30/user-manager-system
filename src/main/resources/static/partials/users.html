@@ -64,7 +64,7 @@
 
                             <li class="user_add_form"><a href="" ng-click="showUsersCtrl.getGroupsToJoin(u.id); showUsersCtrl.toggle_visibility(u.id + 'add')">Join group</a>
                                 <div id="{{u.id}}add" style="display: none">
-                                    <select id="group_to_join_select">
+                                    <select id="group_to_join_select{{u.id}}">
                                         <option ng-repeat="gg in showUsersCtrl.groupsToJoin" value={{gg.id}}>{{gg.name}}</option>
                                     </select>
                                     <button class="add_user_to_gr_submit" ng-click="showUsersCtrl.joinGroup(u.id)">Join group</button>

@@ -34,9 +34,9 @@
             </thead>
             <tbody>
                 <tr class="groups_table_row" ng-repeat="g in groupsCtrl.groups" ng-class-odd="'odd'">
-                    <td width="50px">{{g.id}}</td>
-                    <td width="300px">{{g.name}}</td>
-                    <td width="200px">{{g.users.length}}</td>
+                    <td width="30px">{{g.id}}</td>
+                    <td width="15%">{{g.name}}</td>
+                    <td width="10%">{{g.users.length}}</td>
                     <td class="groups_table_users_td">
                         <a href="" ng-click="groupsCtrl.toggle_visibility(g.id + 'show')">Click to show/hide users</a>
                         <ol id="{{g.id}}show" style="display: none">
@@ -50,8 +50,8 @@
 
                             <li class="user_add_form"><a href="" ng-click="groupsCtrl.getUsersToAdd(g.id);groupsCtrl.toggle_visibility(g.id + 'add')">Add user to group</a>
                                 <div id="{{g.id}}add" style="display: none">
-                                    <select id="user_to_add_select">
-                                        <option ng-repeat="uu in groupsCtrl.usersToAdd" value={{uu.id}}>{{uu.userName}}</option>
+                                    <select id="user_to_add_select{{g.id}}">
+                                        <option ng-repeat="uu in groupsCtrl.usersToAdd" value={{uu.id}}>{{uu.firstName}} {{uu.lastName}}</option>
                                     </select>
                                     <button class="add_user_to_gr_submit" ng-click="groupsCtrl.addUserToGroup(g.id)">Add user</button>
                                 </div>
@@ -59,8 +59,8 @@
 
                         </ol>
                     </td>
-                    <td width="200px"><a ng-href="#!groups/confirm/{{g.id}}">Delete group</a></td>
-                    <td width="200px"><a href=""  ng-click="groupsCtrl.showEditForm(); groupsCtrl.setGroup(g.id)">Edit group's name</a></td>
+                    <td width="15%"><a ng-href="#!groups/confirm/{{g.id}}">Delete group</a></td>
+                    <td width="15%"><a href=""  ng-click="groupsCtrl.showEditForm(); groupsCtrl.setGroup(g.id)">Edit group's name</a></td>
                 </tr>
             </tbody>
         </table>
