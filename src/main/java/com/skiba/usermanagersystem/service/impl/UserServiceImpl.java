@@ -31,7 +31,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDisplay> getAllUsers() {
-        return userRepository.findAll().stream()
+        return userRepository.findAll()
+                .stream()
                 .map(userToUserDisplayMapper::map)
                 .collect(Collectors.toCollection(ArrayList::new));
     }

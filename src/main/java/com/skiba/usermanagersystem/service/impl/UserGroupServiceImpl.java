@@ -108,7 +108,6 @@ public class UserGroupServiceImpl implements UserGroupService {
         } else {
             userGroup.getUsers().remove(user);
             user.getUserGroups().remove(userGroup);
-
             userGroupRepository.save(userGroup);
         }
     }
