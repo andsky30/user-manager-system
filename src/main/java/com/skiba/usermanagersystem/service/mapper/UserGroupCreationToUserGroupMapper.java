@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 public class UserGroupCreationToUserGroupMapper {
 
     public UserGroup map(UserGroupCreation userGroupCreation) {
-
         return new UserGroup(userGroupCreation.getName());
     }
 }

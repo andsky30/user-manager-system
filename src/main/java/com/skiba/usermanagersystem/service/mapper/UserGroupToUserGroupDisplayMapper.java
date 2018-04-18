@@ -14,7 +14,6 @@ public class UserGroupToUserGroupDisplayMapper {
     private UserToUserDisplayMapper userToUserDisplayMapper = new UserToUserDisplayMapper();
 
     public UserGroupDisplay map(UserGroup userGroup) {
-
         return new UserGroupDisplay(
                 userGroup.getId(),
                 userGroup.getName(),

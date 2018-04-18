@@ -8,6 +8,7 @@ import com.skiba.usermanagersystem.repository.UserRepository;
 import com.skiba.usermanagersystem.service.exceptions.UserNotFoundException;
 import com.skiba.usermanagersystem.service.mapper.UserCreationToUserMapper;
 import com.skiba.usermanagersystem.service.mapper.UserToUserDisplayMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,19 +22,12 @@ import static com.skiba.usermanagersystem.service.mapper.UserToUserDisplayMapper
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    UserRepository userRepository;
-    UserToUserDisplayMapper userToUserDisplayMapper;
-    UserCreationToUserMapper userCreationToUserMapper;
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserToUserDisplayMapper userToUserDisplayMapper,
-                           UserCreationToUserMapper userCreationToUserMapper) {
-        this.userRepository = userRepository;
-        this.userToUserDisplayMapper = userToUserDisplayMapper;
-        this.userCreationToUserMapper = userCreationToUserMapper;
-    }
+    private final UserRepository userRepository;
+    private final UserToUserDisplayMapper userToUserDisplayMapper;
+    private final UserCreationToUserMapper userCreationToUserMapper;
 
     @Override
     public List<UserDisplay> getAllUsers() {
@@ -56,15 +50,12 @@ public class UserServiceImpl implements UserService {
     public UserDisplay addUser(UserCreation userCreation) {
         User user = userCreationToUserMapper.map(userCreation);
         User savedUser = userRepository.save(user);
-
         return userToUserDisplayMapper.map(savedUser);
     }
 
     @Override
     public void removeUserById(Long userId) {
-
         User user = userRepository.findUserById(userId);
-
         if (user == null) {
             throw new UserNotFoundException(userId);
         } else {
@@ -74,33 +65,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDisplay updateUser(UserCreation userCreation, Long userId) {
-
         User user = userRepository.findUserById(userId);
-
         if (user == null) {
             throw new UserNotFoundException(userId);
         } else {
-
             LocalDate updatedDateOfBirth = LocalDate.parse(userCreation.getDateOfBirth(),
                     BIRTHDAY_DATE_FORMATTER);
-
             user.setUserName(userCreation.getUserName());
             user.setPassword(userCreation.getPassword());
             user.setFirstName(userCreation.getFirstName());
             user.setLastName(userCreation.getLastName());
             user.setDateOfBirth(updatedDateOfBirth);
-
             User savedUser = userRepository.save(user);
-
             return userToUserDisplayMapper.map(savedUser);
         }
     }
 
     @Override
     public List<UserDisplay> getAllUsersPossibleToAddToGroup(Long groupId) {
-
         String grId = groupId.toString();
-
         return userRepository.findAllUsersPossibleToAddToGroup(grId).stream()
                 .map(userToUserDisplayMapper::map)
                 .collect(Collectors.toCollection(ArrayList::new));

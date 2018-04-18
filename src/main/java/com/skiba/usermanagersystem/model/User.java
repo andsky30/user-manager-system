@@ -1,5 +1,9 @@
 package com.skiba.usermanagersystem.model;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Id;
 
 import javax.persistence.*;
@@ -12,11 +16,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
+@Getter @Setter
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
+    @Setter(AccessLevel.NONE)
     private Long id;
     @NotNull
     private String userName;
@@ -51,57 +57,4 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.userGroups = new ArrayList<>();
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public List<UserGroup> getUserGroups() {
-        return userGroups;
-    }
-
-    public void setUserGroups(List<UserGroup> userGroups) {
-        this.userGroups = userGroups;
-    }
-
 }

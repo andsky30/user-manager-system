@@ -17,9 +17,7 @@ public class UserToUserDisplayMapper {
             new UserGroupToUserGroupDisplayToJoinMapper();
 
     public UserDisplay map(User user) {
-
         String dateOfBirth = user.getDateOfBirth().format(BIRTHDAY_DATE_FORMATTER);
-
         UserDisplay userDisplay = new UserDisplay(
                 user.getId(),
                 user.getUserName(),
@@ -30,7 +28,6 @@ public class UserToUserDisplayMapper {
                 user.getUserGroups().stream()
                     .map(g -> userGroupToUserGroupDisplayToJoinMapper.map(g))
                     .collect(Collectors.toCollection(ArrayList::new)));
-
         return userDisplay;
     }
 }

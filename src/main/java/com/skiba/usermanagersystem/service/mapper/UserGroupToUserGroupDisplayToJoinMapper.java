@@ -9,11 +9,9 @@ import org.springframework.stereotype.Component;
 public class UserGroupToUserGroupDisplayToJoinMapper {
 
     public UserGroupDisplayToJoin map(UserGroup userGroup) {
-
         UserGroupDisplayToJoin userGroupDisplayToJoin = new UserGroupDisplayToJoin(
                 userGroup.getId(),
                 userGroup.getName());
-
         return userGroupDisplayToJoin;
     }
 }

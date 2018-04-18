@@ -12,10 +12,7 @@ import static com.skiba.usermanagersystem.service.mapper.UserToUserDisplayMapper
 public class UserCreationToUserMapper {
 
     public User map(UserCreation userCreation) {
-
-        LocalDate dateOfBirth = LocalDate.parse(userCreation.getDateOfBirth(),
-                BIRTHDAY_DATE_FORMATTER);
-
+        LocalDate dateOfBirth = LocalDate.parse(userCreation.getDateOfBirth(), BIRTHDAY_DATE_FORMATTER);
         return new User(userCreation.getUserName(),
                 userCreation.getPassword(),
                 userCreation.getFirstName(),

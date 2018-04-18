@@ -13,6 +13,7 @@ import com.skiba.usermanagersystem.service.exceptions.UserNotFoundException;
 import com.skiba.usermanagersystem.service.exceptions.UserNotInGroupException;
 import com.skiba.usermanagersystem.service.mapper.UserGroupCreationToUserGroupMapper;
 import com.skiba.usermanagersystem.service.mapper.UserGroupToUserGroupDisplayMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,22 +24,13 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserGroupServiceImpl implements UserGroupService {
 
-    UserRepository userRepository;
-    UserGroupRepository userGroupRepository;
-    UserGroupCreationToUserGroupMapper userGroupCreationToUserGroupMapper;
-    UserGroupToUserGroupDisplayMapper userGroupToUserGroupDisplayMapper;
-
-    @Autowired
-    public UserGroupServiceImpl(UserRepository userRepository, UserGroupRepository userGroupRepository,
-                                UserGroupCreationToUserGroupMapper userGroupCreationToUserGroupMapper,
-                                UserGroupToUserGroupDisplayMapper userGroupToUserGroupDisplayMapper) {
-        this.userRepository = userRepository;
-        this.userGroupRepository = userGroupRepository;
-        this.userGroupCreationToUserGroupMapper = userGroupCreationToUserGroupMapper;
-        this.userGroupToUserGroupDisplayMapper = userGroupToUserGroupDisplayMapper;
-    }
+    private final UserRepository userRepository;
+    private final UserGroupRepository userGroupRepository;
+    private final UserGroupCreationToUserGroupMapper userGroupCreationToUserGroupMapper;
+    private final UserGroupToUserGroupDisplayMapper userGroupToUserGroupDisplayMapper;
 
     @Override
     public List<UserGroupDisplay> getAllGroups() {
@@ -59,19 +51,14 @@ public class UserGroupServiceImpl implements UserGroupService {
 
     @Override
     public UserGroupDisplay addUserGroup(UserGroupCreation userGroupCreation) {
-
         UserGroup userGroup = userGroupCreationToUserGroupMapper.map(userGroupCreation);
-
         UserGroup savedGroup = userGroupRepository.save(userGroup);
-
         return userGroupToUserGroupDisplayMapper.map(savedGroup);
     }
 
     @Override
     public void removeUserGroupById(Long groupId) {
-
         UserGroup userGroup = userGroupRepository.findUserGroupById(groupId);
-
         if (userGroup == null) {
             throw new UserGroupNotFoundException(groupId);
         } else {
@@ -82,25 +69,19 @@ public class UserGroupServiceImpl implements UserGroupService {
     @Override
     public UserGroupDisplay updateUserGroup(UserGroupCreation userGroupCreation, Long groupId) {
         UserGroup userGroup = userGroupRepository.findUserGroupById(groupId);
-
         if (userGroup == null) {
             throw new UserGroupNotFoundException(groupId);
         } else {
-
             userGroup.setName(userGroupCreation.getName());
-
             UserGroup savedGroup = userGroupRepository.save(userGroup);
-
             return userGroupToUserGroupDisplayMapper.map(savedGroup);
         }
     }
 
     @Override
     public void addUserToGroup(Long groupId, Long userId) {
-
         User user = userRepository.findUserById(userId);
         UserGroup userGroup = userGroupRepository.findUserGroupById(groupId);
-
         if (userGroup == null) {
             throw new UserGroupNotFoundException(groupId);
         } else if (user == null) {
@@ -110,17 +91,14 @@ public class UserGroupServiceImpl implements UserGroupService {
         } else {
             userGroup.getUsers().add(user);
             user.getUserGroups().add(userGroup);
-
             userGroupRepository.save(userGroup);
         }
     }
 
     @Override
     public void removeUserFromGroup(Long groupId, Long userId) {
-
         User user = userRepository.findUserById(userId);
         UserGroup userGroup = userGroupRepository.findUserGroupById(groupId);
-
         if (userGroup == null) {
             throw new UserGroupNotFoundException(groupId);
         } else if (user == null) {
@@ -137,9 +115,7 @@ public class UserGroupServiceImpl implements UserGroupService {
 
     @Override
     public List<UserGroupDisplay> getAllGroupsPossibleToJoin(Long userId) {
-
         String usId = userId.toString();
-
         return userGroupRepository.findAllGroupsPossibleToJoin(usId).stream()
                 .map(userGroupToUserGroupDisplayMapper::map)
                 .collect(Collectors.toCollection(ArrayList::new));
