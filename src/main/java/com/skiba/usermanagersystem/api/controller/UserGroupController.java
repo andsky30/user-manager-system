@@ -5,7 +5,6 @@ import com.skiba.usermanagersystem.api.dto.UserGroupCreation;
 import com.skiba.usermanagersystem.api.dto.UserGroupDisplay;
 import com.skiba.usermanagersystem.api.service.UserGroupService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,19 +13,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+import static com.skiba.usermanagersystem.util.Message.*;
 
 @RestController
 @RequiredArgsConstructor
 public class UserGroupController {
-
-    private static final String MESSAGE_AFTER_USERGROUP_BY_ID_DELETION = "User group " +
-            "with ID: %d has been deleted successfully!!!";
-
-    private static final String MESSAGE_AFTER_USER_TO_GROUP_ADDITION = "User  " +
-            "with ID: %d has been added successfully to user group with ID: %d";
-
-    private static final String MESSAGE_AFTER_USER_FROM_GROUP_DELETION = "User  " +
-            "with ID: %d has been deleted successfully from user group with ID: %d";
 
     private final UserGroupService userGroupService;
 
@@ -92,7 +83,7 @@ public class UserGroupController {
 
     @GetMapping(value = "/api/groups/candidates_to_join/{userId}")
     public ResponseEntity<List<UserGroupDisplay>> getUsersPossibleToAddToGroup(@PathVariable Long userId) {
-        List<UserGroupDisplay> allGroupsPossibleTojoin = userGroupService.getAllGroupsPossibleToJoin(userId);
-        return ResponseEntity.ok(allGroupsPossibleTojoin);
+        List<UserGroupDisplay> allGroupsPossibleToJoin = userGroupService.getAllGroupsPossibleToJoin(userId);
+        return ResponseEntity.ok(allGroupsPossibleToJoin);
     }
 }

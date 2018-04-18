@@ -15,11 +15,11 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+import static com.skiba.usermanagersystem.util.Message.MESSAGE_AFTER_USER_BY_ID_DELETION;
+
 @RestController
 @RequiredArgsConstructor
 public class UserController {
-
-    private static final String MESSAGE_AFTER_USER_BY_ID_DELETION = "User with ID: %d has been deleted successfully!!!";
 
     private final UserService userService;
 
