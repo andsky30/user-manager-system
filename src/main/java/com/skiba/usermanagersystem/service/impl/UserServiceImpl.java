@@ -8,6 +8,8 @@ import com.skiba.usermanagersystem.repository.UserRepository;
 import com.skiba.usermanagersystem.service.exceptions.UserNotFoundException;
 import com.skiba.usermanagersystem.service.mapper.UserCreationToUserMapper;
 import com.skiba.usermanagersystem.service.mapper.UserToUserDisplayMapper;
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +24,12 @@ import static com.skiba.usermanagersystem.service.mapper.UserToUserDisplayMapper
 
 @Service
 @Transactional
-@RequiredArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
-    private final UserToUserDisplayMapper userToUserDisplayMapper;
-    private final UserCreationToUserMapper userCreationToUserMapper;
+    private UserRepository userRepository;
+    private UserToUserDisplayMapper userToUserDisplayMapper;
+    private UserCreationToUserMapper userCreationToUserMapper;
 
     @Override
     public List<UserDisplay> getAllUsers() {

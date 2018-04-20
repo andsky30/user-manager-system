@@ -36,7 +36,7 @@ public class UserGroupServiceImplTest {
 
     @Before
     public void setUp(){
-        MockitoAnnotations.initMocks(this);
+//        MockitoAnnotations.initMocks(this);
     }
 
     @Test
